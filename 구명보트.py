@@ -5,15 +5,17 @@ def solution(people, limit):
 
     people.sort(reverse = True)
 
-    while len(people) > 1 :
+    while len(people) > 0 :
         i = people[0]
-        for j in people[1:] :
-            if i + j <= limit :
-                people.remove(j)
-                break
-        people.remove(i)
-        answer += 1
-    if len(people) == 1 : answer += 1
+        if i <= limit/2 :
+            answer += len(people)//2 + len(people)%2
+            break
+        else :
+            j = people[-1]
+            people.remove(i)
+            if i+j <= limit : people.remove(j)
+            answer += 1
+                
     return answer
 
 print(str(solution([70, 50, 80, 50], 100))+', 3')
