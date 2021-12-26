@@ -6,18 +6,18 @@ def solution(people, limit):
     people.sort(reverse = True)
     remaining = list(range(len(people)))
     departed = list()
-
-    for i in range(len(people)) :
-        if i not in departed :
-            remaining.remove(i)
-            departed.append(i)
-            for j in remaining :
-                if people[i] + people[j] <= limit :
-                    remaining.remove(j)
-                    departed.append(j)
-                    break
-            answer += 1
-
+    
+    while len(remaining) > 1 :
+        i = remaining[0]
+        for j in remaining[1:] :
+            if people[remaining[0]] + people[j] <= limit :
+                remaining.remove(j)
+                departed.append(j)
+                break
+        remaining.remove(i)
+        departed.append(i)
+        answer += 1
+    if len(remaining) == 1 : answer += 1
     return answer
 
 print(str(solution([70, 50, 80, 50], 100))+', 3')
