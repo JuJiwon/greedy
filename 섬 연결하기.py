@@ -20,7 +20,7 @@ def minimumCost(costs, parent, n, index) :
     elif parent == findParent(slicedCosts, list(map(lambda x : x, range(n)))) : return minimumCost(slicedCosts, parent, n, index)
     else : return minimumCost(costs, parent, n, index)
 
-def solution(n, costs):
+def solution(n, costs) :
 
     answer = 0
     costs.sort(key = lambda x : x[2])
