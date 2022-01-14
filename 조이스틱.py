@@ -1,5 +1,9 @@
 # https://programmers.co.kr/learn/courses/30/lessons/42860
 
+from collections import namedtuple
+from turtle import back
+
+
 def counter(target) :
     if target <= 26-target :
         return target
@@ -64,20 +68,31 @@ def solution(name) :
             for data in nameData :
                 answer += counter(data)+1
         else :
+            frontDistance = ((largestAlpha[0]-1)*2)
+            backDistance = (len(nameData)-largestAlpha[1]-1)*2-1
             # largestAlpha가 되돌아가는 횟수보다 작다면 처리함.
-            frontCount = ((largestAlpha[0]-1)*2)
-            if largestAlpha[1] <= frontCount :
+            if largestAlpha[1] <= frontDistance and len(nameData)-largestAlpha[0] <= backDistance :
                 del nameData[0]
                 for data in nameData :
                     answer += counter(data)+1
+            # largestAlpha가 되돌아가는 횟수보다 크므로 최소 이동 방향으로 처리한 뒤 되돌아가야 함.
             else :
-                # largestAlpha가 되돌아가는 횟수보다 크므로 처리한 뒤 되돌아가야 함.
-                for data in nameData[:largestAlpha[0]] :
-                    answer += counter(data)
-                answer += frontCount
-                del nameData[:largestAlpha[1]+1]
-                for data in list(reversed(nameData)) :
-                    answer += counter(data)+1
+                del nameData[0]
+                if frontDistance <= backDistance :
+                    for data in nameData[:largestAlpha[0]-1] :
+                        answer += counter(data)
+                    answer += frontDistance
+                    del nameData[:largestAlpha[1]]
+                    for data in list(reversed(nameData)) :
+                        answer += counter(data)+1
+                else :
+                    for data in nameData[largestAlpha[1]:] :
+                        answer += counter(data)
+                    answer += backDistance+1
+                    del nameData[largestAlpha[0]-1:]
+                    for data in nameData :
+                        answer += counter(data)+1
+                
 
     return answer
 
