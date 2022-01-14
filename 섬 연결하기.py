@@ -4,8 +4,8 @@
 def findParent(costs, parent) :
 
     tempParent = parent[:]
-    for i in range(len(costs)) :
-        nodes = sorted(costs[i][:2])
+    for cost in costs :
+        nodes = sorted(cost[:2])
         if tempParent[nodes[0]] < tempParent[nodes[1]] : tempParent[nodes[1]] = tempParent[nodes[0]]
         elif tempParent[nodes[0]] > tempParent[nodes[1]] : tempParent[nodes[0]] = tempParent[nodes[1]]
 
